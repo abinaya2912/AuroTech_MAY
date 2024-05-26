@@ -2,272 +2,246 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List</title>
+    <title>Stack Furnitures</title>
     <style>
-        /* CSS Styles */
+        /* Basic styling for the page */
         body {
-    background-image: url("https://images.freecreatives.com/wp-content/uploads/2016/04/Beautiful-Plain-Website-Background.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover; /* This property ensures the image covers the entire background */
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-        .todo-container {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 20px;
-            width: 400px;
-            box-sizing: border-box;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin: 0 0 20px;
-            text-align: center;
-            color: #333;
-        }
-
-        .input-container {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-        }
-
-        .input-container input[type="text"],
-        .input-container input[type="date"],
-        .input-container textarea,
-        .input-container select {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-
-        .input-container button {
-            padding: 10px;
-            border: none;
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .input-container button:hover {
-            background-color: #0056b3;
-        }
-
-        .task-list {
-            list-style-type: none;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
             padding: 0;
         }
 
-        .task-card {
-            background: #fafafa;
-            padding: 15px;
-            border-radius: 6px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 10px;
+        /* Navigation styling */
+        nav {
+            background-color: #333;
+            padding: 10px 20px;
+        }
+
+        nav ul {
+            list-style: none;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: background 0.3s;
+            justify-content: space-around;
+            margin: 0;
+            padding: 0;
         }
 
-        .task-card .task-header {
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+
+        nav a:hover {
+            background-color: #555;
+            transition: background-color 0.3s;
+        }
+
+        /* Hero section styling */
+        .hero {
+            background-image: url('https://damroimages.blob.core.windows.net/damroimages/blob_1713336670563');
+            background-size: cover;
+            background-position: center;
+            color: rgb(12, 12, 12);
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+        }
+
+        .hero p {
+            font-size: 20px;
+        }
+
+        .cta {
+            background-color: #f57c00;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .cta:hover {
+            background-color: #e05c00;
+        }
+
+        /* General section styling */
+        .section {
+            padding: 40px 20px;
+        }
+
+        /* Product list styling */
+        .product-list {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 20px 0;
         }
 
-        .task-card .task-text {
-            flex: 1;
-            margin-bottom: 10px;
+        .product {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 10px;
+            border-radius: 5px;
+            width: 200px;
         }
 
-        .task-card .task-meta {
-            font-size: 12px;
-            color: #777;
+        .product img {
+            width: 150px;
+            height: auto;
+            border-radius: 5px;
         }
 
-        .task-card.completed {
-            background: #d4edda;
-            text-decoration: line-through;
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
         }
 
-        .task-card .task-actions {
-            display: flex;
-            gap: 10px;
+        footer p {
+            margin: 0;
         }
-
-        .task-card .task-actions button {
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .task-card .task-actions .edit {
-            color: #007bff;
-        }
-
-        .task-card .task-actions .delete {
-            color: #dc3545;
-        }
-
-        .task-card .task-actions .complete {
-            color: #28a745;
-        }
-
     </style>
 </head>
 <body>
-    <div class="todo-container">
-        <h1>My To-Do List</h1>
-        <div class="input-container">
-            <input type="text" id="new-task" placeholder="Add a new task...">
-            <textarea id="description" placeholder="Add a description..."></textarea>
-            <input type="date" id="due-date">
-            <input type="text" id="category" placeholder="Category...">
-            <select id="priority">
-                <option value="low">Low Priority</option>
-                <option value="medium">Medium Priority</option>
-                <option value="high">High Priority</option>
-            </select>
-            <button id="add-task-button">Add</button>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about-us">About Us</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Stack Furnitures</h1>
+            <p>Discover our range of stylish furniture collections for your home.</p>
+            <a href="#products" class="cta">Explore Our Products</a>
         </div>
-        <div class="task-list">
-            <!-- Task cards will be appended here -->
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about-us" class="section">
+        <h2>About Us</h2>
+        <p>
+            We are the Number One company in the furniture industry and growing in popularity daily.<br><br>
+            Our site attracts 185,000 unique visitors a month, keeping the furniture industry up-to-date with the latest trends, news, and insights. Visit our site for daily updates, and talk to your sales representative to start your advertising campaign today.
+        </p>
+        <img src="https://png.pngtree.com/png-clipart/20200727/original/pngtree-gold-furniture-lamp-chair-interior-logo-design-template-inspirat-png-image_5070054.jpg" alt="Furniture Logo" style="max-width: 200px; margin: 0 auto; display: block;">
+       
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="section">
+        <h2>Our Products</h2>
+        
+        <!-- Dining Room Products -->
+        <h3>Dining Room</h3>
+        <div class="product-list">
+            <article class="product">
+                <img src="https://i.pinimg.com/originals/87/9b/12/879b1269cc194c2f8fee51b0a864b94a.jpg" alt="Dining Table">
+                <h4>Dining Table</h4>
+                <p>Modern dining table for up to 8 people with sleek design. Perfect for family gatherings.</p>
+            </article>
+
+            <article class="product">
+                <img src="https://tse2.mm.bing.net/th?id=OIP.rU6YA3Y4tSxEoSH3lEDpKgHaHa&pid=Api&P=0&h=180" alt="Dining Chairs">
+                <h4>Dining Chairs</h4>
+                <p>Set of 4 dining chairs with comfortable cushions and a classic design.</p>
+            </article>
+
+            <article class="product">
+                <img src="https://housefulofhandmade.com/wp-content/uploads/2018/10/dining-room-buffet-with-hutch-2.jpg" alt="Dining Hutch">
+                <h4>Dining Hutch</h4>
+                <p>Elegant hutch with ample storage space, suitable for dishes and glassware.</p>
+            </article>
+
+            <article class="product">
+                <img src="https://tse4.mm.bing.net/th?id=OIP.UaQWea2Q0zYQCn_PpkETaAHaF7&pid=Api&P=0&h=180" alt="Dining Server">
+                <h4>Dining Server</h4>
+                <p>Stylish dining server with storage for plates and utensils.</p>
+            </article>
         </div>
-    </div>
+        
+        <!-- Bedroom Products -->
+        <h3>Bedroom</h3>
+        <div class="product-list">
+            <article class="product">
+                <img src="https://tse3.mm.bing.net/th?id=OIP.IMDngMJEdByLVe43G4ESpQHaHa&pid=Api&P=0&h=180" alt="King-Size Bed">
+                <h4>King-Size Bed</h4>
+                <p>Luxurious king-size bed with a soft headboard and ample storage.</p>
+            </article>
 
-    <script>
-        // JavaScript Functionality
-        document.addEventListener('DOMContentLoaded', () => {
-            const taskInput = document.getElementById('new-task');
-            const descriptionInput = document.getElementById('description');
-            const dueDateInput = document.getElementById('due-date');
-            const categoryInput = document.getElementById('category');
-            const prioritySelect = document.getElementById('priority');
-            const addTaskButton = document.getElementById('add-task-button');
-            const taskList = document.querySelector('.task-list');
+            <article class="product">
+                <img src="https://tse4.mm.bing.net/th?id=OIP.m7PojxrRh_KdlLbTu86-sAHaHa&pid=Api&P=0&h=180" alt="Nightstand">
+                <h4>Nightstand</h4>
+                <p>Nightstand with drawers and built-in charging station.</p>
+            </article>
 
-            // Load tasks from local storage
-            const loadTasks = () => {
-                const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-                tasks.forEach(task => {
-                    createTaskCard(task.text, task.description, task.dueDate, task.category, task.priority, task.addedDate, task.completed);
-                });
-            };
+            <article class="product">
+                <img src="https://i5.walmartimages.com/asr/ad3fc616-c486-49ba-975c-32805d8ee064.4096b64e47709d52bd564275d697e410.jpeg" alt="Dresser">
+                <h4>Dresser</h4>
+                <p>Elegant dresser with multiple drawers for clothes and accessories.</p>
+            </article>
 
-            // Save tasks to local storage
-            const saveTasks = () => {
-                const tasks = [];
-                document.querySelectorAll('.task-card').forEach(taskCard => {
-                    const taskText = taskCard.querySelector('.task-text').textContent;
-                    const taskDescription = taskCard.querySelector('.task-description').textContent;
-                    const taskDueDate = taskCard.querySelector('.task-due-date').textContent.replace('Due: ', '');
-                    const taskCategory = taskCard.querySelector('.task-category').textContent.replace('Category: ', '');
-                    const taskPriority = taskCard.querySelector('.task-priority').textContent.replace('Priority: ', '');
-                    const taskAddedDate = taskCard.querySelector('.task-added-date').textContent.replace('Added: ', '');
-                    const taskCompleted = taskCard.classList.contains('completed');
-                    tasks.push({ text: taskText, description: taskDescription, dueDate: taskDueDate, category: taskCategory, priority: taskPriority, addedDate: taskAddedDate, completed: taskCompleted });
-                });
-                localStorage.setItem('tasks', JSON.stringify(tasks));
-            };
+            <article class="product">
+                <img src="https://i5.walmartimages.com/asr/1e52d003-8141-4552-8371-9df15a73e0bd.cdf1d8d302ac2932d71fa724144b75d8.jpeg" alt="Bedroom Lamp">
+                <h4>Bedroom Lamp</h4>
+                <p>Stylish lamp to illuminate your bedroom with a warm glow.</p>
+            </article>
+        </div>
+        
+        <!-- Hallway Products -->
+        <h3>Hallway</h3>
+        <div class="product-list">
+            <article class="product">
+                <img src="https://i5.walmartimages.com/asr/041727df-0aa5-47a7-9c8e-7d64495d8490.2e12cde2042ac3206429b26a242bf88e.jpeg" alt="Coat Rack">
+                <h4>Coat Rack</h4>
+                <p>A sleek coat rack with ample hooks for coats and hats.</p>
+            </article>
 
-            addTaskButton.addEventListener('click', () => {
-                addTask();
-            });
+            <article class="product">
+                <img src="https://i5.walmartimages.com/asr/d5720114-1a5f-4404-81dd-5b60431006c4.2f8783b599b276d7cbec1a935b78ab27.jpeg" alt="Hall Table">
+                <h4>Hall Table</h4>
+                <p>Versatile hall table with storage and a classic design.</p>
+            </article>
 
-            const addTask = () => {
-                const taskText = taskInput.value.trim();
-                const taskDescription = descriptionInput.value.trim();
-                const dueDate = dueDateInput.value;
-                const category = categoryInput.value.trim();
-                const priority = prioritySelect.value;
+            <article class="product">
+                <img src="https://www.decornation.in/wp-content/uploads/2020/01/designer-living-room-wood-shoe-rack-1.jpg" alt="Shoe Rack">
+                <h4>Shoe Rack"></h4> 
+                <p>Modern shoe rack with multiple tiers for convenient storage.</p>
+            </article>
 
-                if (taskText === '') return;
+            <article class="product">
+                <img src="https://d18wkpp7xvnw38.cloudfront.net/wp-content/uploads/2020/07/AH-1113-LGMARFA-4.jpg" alt="Umbrella Stand">
+                <h4>Umbrella Stand"></h4>
+                <p>Stylish umbrella stand with a sleek design for your hallway.</p>
+            </article>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <h2>Contact Us</h2>
+        <p>For inquiries or assistance, reach out to our support team.</p>
+        <p>Email: support@stackfurnitures.com</p>
+        <p>Phone:1-800-123-4567</p>
+        </section>
+<!--Footer-->
+<footer>
+    <p>&copy;2024Stack Furnitures.All rights reserved.</p>
 
-                const currentDate = new Date();
-                const dateString = currentDate.toLocaleString();
-
-                createTaskCard(taskText, taskDescription, dueDate, category, priority, dateString, false);
-
-                taskInput.value = '';
-                descriptionInput.value = '';
-                dueDateInput.value = '';
-                categoryInput.value = '';
-                prioritySelect.value = 'low';
-
-                saveTasks();
-            };
-
-            const createTaskCard = (taskText, taskDescription, dueDate, category, priority, dateString, completed) => {
-                const taskCard = document.createElement('div');
-                taskCard.classList.add('task-card');
-                if (completed) taskCard.classList.add('completed');
-
-                taskCard.innerHTML = `
-                    <div class="task-header">
-                        <span class="task-text">${taskText}</span>
-                        <div class="task-actions">
-                            <button class="complete">✔️</button>
-                            <button class="edit">✏️</button>
-                            <button class="delete">❌</button>
-                        </div>
-                    </div>
-                    <div class="task-meta">
-                        <div class="task-description">${taskDescription}</div>
-                        <span class="task-added-date">Added: ${dateString}</span>
-                        ${dueDate ? `<span class="task-due-date">Due: ${dueDate}</span>` : ''}
-                        ${category ? `<span class="task-category">Category: ${category}</span>` : ''}
-                        <span class="task-priority">Priority: ${priority.charAt(0).toUpperCase() + priority.slice(1)}</span>
-                    </div>
-                `;
-
-                taskList.appendChild(taskCard);
-
-                const completeButton = taskCard.querySelector('.complete');
-                const editButton = taskCard.querySelector('.edit');
-                const deleteButton = taskCard.querySelector('.delete');
-
-                completeButton.addEventListener('click', () => {
-                    taskCard.classList.toggle('completed');
-                    saveTasks();
-                });
-
-                editButton.addEventListener('click', () => {
-                    const newTaskText = prompt('Edit task:', taskText);
-                    if (newTaskText !== null && newTaskText.trim() !== '') {
-                        taskCard.querySelector('.task-text').textContent = newTaskText.trim();
-                    }
-                    const newDescription = prompt('Edit description:', taskDescription);
-                    if (newDescription !== null && newDescription.trim() !== '') {
-                        taskCard.querySelector('.task-description').textContent = newDescription.trim();
-                    }
-                    saveTasks();
-                });
-
-                deleteButton.addEventListener('click', () => {
-                    taskList.removeChild(taskCard);
-                    saveTasks();
-                });
-            };
-
-            loadTasks();
-        });
-    </script>
+</footer>
 </body>
 </html>
